@@ -42,7 +42,12 @@
 <!-- Your community, and what your classifier sorts posts into. Three or four
      sentences. -->
 
-
+TakeMeter sorts comments from r/soccer, Reddit's main football discussion
+community, by what kind of contribution they make. Each comment goes into one of
+three labels: `analysis` (an argument backed by a checkable fact),
+`hot_take` (a confident opinion with nothing backing it), or `reaction`
+(in-the-moment emotion about something that just happened). The goal is to tell
+a stat-backed argument apart from loud opinion and match-day noise.
 
 ---
 
@@ -54,34 +59,80 @@
      The decision rule is worth a point on its own and it's the thing most
      people leave out. Every taxonomy has a hardest boundary. Name yours. -->
 
-### `label_one`
+### `analysis`
 
-**Definition:**
-
-**Example 1:**
->
-
-**Example 2:**
->
-
-### `label_two`
-
-**Definition:**
+**Definition:** Makes a point about anyone or anything in football (players,
+teams, managers, referees, clubs, leagues) and backs it with at least one
+specific, checkable fact (a stat, score, date, fee, record or named result)
+that does work in the argument.
 
 **Example 1:**
->
+> TODO: paste a real r/soccer comment
 
 **Example 2:**
->
+> TODO: paste a real r/soccer comment
+
+### `hot_take`
+
+**Definition:** States a confident judgement about anyone or anything in
+football (players, teams, managers, referees, clubs, leagues) with no
+checkable support. It may be true, but it isn't argued.
+
+**Example 1:**
+> TODO: paste a real r/soccer comment
+
+**Example 2:**
+> TODO: paste a real r/soccer comment
+
+### `reaction`
+
+**Definition:** An immediate response to something that just happened (a
+goal, a result, a signing, a decision, a comment in the thread) that expresses
+a feeling, a joke or a question rather than a judgement.
+
+**Example 1:**
+> TODO: paste a real r/soccer comment
+
+**Example 2:**
+> TODO: paste a real r/soccer comment
 
 ### The hardest boundary
 
-**Which two labels:**
+**Which two labels:** `analysis` vs. `hot_take`
 
 **The decision rule I used every time:**
 <!-- e.g. "If the post names a specific checkable fact, it's `analysis`, even
      if the tone is heated." -->
 
+A comment is `analysis` only if it names at least one specific fact someone
+could look up (a number, score, date, fee or named match result) **and** that
+fact supports the claim. Vague support like "he always disappears in big
+games", "everyone knows" or "look at his record" does not count, so those
+comments are `hot_take`, however reasonable they sound. Tone does not matter:
+an angry comment with a real stat is still `analysis`.
+
+**Second rule (`hot_take` vs. `reaction`):** If the comment passes judgement
+on someone's quality or future ("he's finished", "worst signing ever"), it is
+`hot_take`, even if it was written mid-match. If it only expresses a feeling
+about what just happened ("I can't believe that", "WHAT A GOAL"), it is
+`reaction`.
+
+**Jokes and sarcasm:** label by what the comment is actually doing. A
+sarcastic "yeah he's definitely worth £100m" is a judgement with no support,
+so it is `hot_take`. A pure joke that judges nothing is `reaction`.
+
+**Other cases the three definitions don't settle on their own:**
+
+- **Questions:** a loaded question that carries a judgement ("Why is his first
+  touch so bad?") is `hot_take`. A genuine question with no judgement in it is
+  `reaction`, because it's a response to the discussion, not an argument.
+- **Bare facts:** a checkable fact offered as a contribution ("Most saves in a
+  World Cup match? 16 by Tim Howard against Belgium in 2014") is `analysis`,
+  even if no opinion is stated.
+- **Predictions:** a confident claim about what will happen, with no checkable
+  support ("30th Oct has 0-0 written all over it"), is `hot_take`.
+- **Off-topic comments** (kits, celebrations, fans): use the same tests. A
+  judgement is `hot_take`, a feeling is `reaction`.
 
 
 ---
