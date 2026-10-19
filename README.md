@@ -67,10 +67,10 @@ specific, checkable fact (a stat, score, date, fee, record or named result)
 that does work in the argument.
 
 **Example 1:**
-> TODO: paste a real r/soccer comment
+> 5-0 vs Palace, 5-0 vs Coventry, 4-0 vs Villa, 3-0 vs Arsenal, second in the league. I have no words for this team. Not seen such an entertaining team in the league in a long time, they're absolutely hammering teams
 
 **Example 2:**
-> TODO: paste a real r/soccer comment
+> Under Emery, Villa have taken 59 points out of 33 matches against the Sky Six - that's 1.79 points per match. (Just so we don't have to include our performance under Gerrard.)
 
 ### `hot_take`
 
@@ -79,10 +79,10 @@ football (players, teams, managers, referees, clubs, leagues) with no
 checkable support. It may be true, but it isn't argued.
 
 **Example 1:**
-> TODO: paste a real r/soccer comment
+> Saka is not the star boy arsenal fans make him out to be and frankly he hasn’t been world class in at least a year.
 
 **Example 2:**
-> TODO: paste a real r/soccer comment
+> It’s pretty evident Arsenal overpaid for Eze and it’s a poor decision. It does not seem like he’s interested in playing LW, That money would have been better spent on Rogers this summer instead.
 
 ### `reaction`
 
@@ -91,10 +91,10 @@ goal, a result, a signing, a decision, a comment in the thread) that expresses
 a feeling, a joke or a question rather than a judgement.
 
 **Example 1:**
-> TODO: paste a real r/soccer comment
+> what an unbelievable stop!!!
 
 **Example 2:**
-> TODO: paste a real r/soccer comment
+> I've seen episodes of Mrs Browns Boys more enjoyable than that good lord
 
 ### The hardest boundary
 
@@ -142,19 +142,54 @@ so it is `hot_take`. A pure joke that judges nothing is `reaction`.
 <!-- Where you collected from, how you labelled, your counts, and three hard
      cases. -->
 
-**Where the posts came from:**
+**Where the posts came from:** Public comments from
+[r/soccer](https://old.reddit.com/r/soccer), copied by hand from threads posted
+in September and October 2026. I spread them across thread types so no single
+match or topic dominates:
 
-**How I labelled them:** <!-- Cold first? Pre-labelled with AI and corrected?
-Say so plainly — the disclosure is required, not penalised. -->
+- **Post-match threads:** Brighton, Manchester United, Arsenal vs Forest, Real
+  Madrid, Liverpool vs City, Spain vs England
+- **Live match threads:** Lazio, Lyon, Milan (short, in-the-moment comments)
+- **Champions League:** Barcelona vs Galatasaray
+- **Stats and [OC] posts:** a Ballon d'Or ranking, a big-six points table,
+  Haaland's Norway record (where most `analysis` comments came from)
+- **News:** the Manchester City punishment story
+
+I kept whole comments and skipped anything that only made sense next to the
+comment it replied to ("this", "called it", a meme reference). I removed two
+duplicates, one exact and one reply that quoted another comment, so they
+couldn't leak between the training and test splits.
+
+**I have 161 rows, not 200.** Copying comments by hand took much longer than I
+expected, so I stopped once I was past the 150 floor rather than rush the
+labelling. The cost is that `analysis` is thin (30 rows, so about 5 in the test
+split), and my criteria set a looser target for it because of that.
+
+**How I labelled them:** By hand, by me. **No AI pre-labelling.**
+
+1. **Cold set.** 20 rows picked at random, marked `cold` in the note column and
+   labelled using only my README definitions. One row I first picked ("This
+   Brighton team is insane…") was swapped out of the cold set because the AI
+   tool I was using showed a label for it as a formatting example. Its note
+   says so. A random hand-labelled row replaced it.
+2. **The other 141**, labelled by hand. In practice I labelled these before the
+   20 cold rows, not after as the brief suggests, but the cold rows were still
+   labelled without any help.
+3. **Second-opinion review.** I had an AI tool read my 141 non-cold labels
+   against my written rules and list the rows where it would pick differently.
+   It flagged 38. I accepted all 38 after reading them, mostly judgements I had
+   labelled `reaction` that my own rule calls `hot_take`. Every changed row is
+   marked `relabelled after AI second-opinion review` in the note column. The
+   20 cold rows were not reviewed or changed.
 
 **Counts per label:**
 
 | Label | Count | Share |
 |---|---|---|
-|  |  |  |
-|  |  |  |
-|  |  |  |
-| **Total** |  | 100% |
+| `hot_take` | 77 | 48% |
+| `reaction` | 54 | 34% |
+| `analysis` | 30 | 19% |
+| **Total** | 161 | 100% |
 
 **Three hard cases**
 
@@ -162,25 +197,45 @@ Say so plainly — the disclosure is required, not penalised. -->
      been, and what you chose. These are worth more than the easy 190. -->
 
 **1.**
-> *The post:*
+> *The post:* "Barca won against Galatasaray, Atleti wins against Man U,
+> Villareal wins against Napoli. Yeah La Liga is a farmer’s league alright."
 >
-> *Could have been:*
+> *Could have been:* `analysis` or `hot_take`
 >
-> *I chose, because:*
+> *I chose `analysis`, because:* it's sarcastic, and my sarcasm rule says to
+> label by what the comment is actually doing. The real point is "La Liga is not
+> a weak league", and it's backed by three specific, checkable results. The
+> facts do the work in the argument, so the tone doesn't make it a `hot_take`.
 
 **2.**
-> *The post:*
+> *The post:* "Vuskovic's mentality will make him be one of the best CB in the
+> world. He lost a single duel today you could see in his reaction how much
+> that pissed him off."
 >
-> *Could have been:*
+> *Could have been:* `analysis` or `hot_take`
 >
-> *I chose, because:*
+> *I chose `analysis`, because:* "lost a single duel today" is a match stat
+> someone could look up, and it's offered as evidence for the claim. It's the
+> weakest `analysis` in my set, though. The claim ("one of the best CB in the
+> world") is far bigger than one stat can support, and someone else could fairly
+> call it a `hot_take`.
 
 **3.**
-> *The post:*
+> *The post:* "If City is not punished severely enough I legimately think the
+> Premier League collapses. Theyve spun off the first division before and tried
+> to other times. I don't think theres any circumstance where
+> Liverpool/United/Arsenal are will to play in the same league City is in over
+> the next decade."
 >
-> *Could have been:*
+> *Could have been:* `reaction` or `hot_take`
 >
-> *I chose, because:*
+> *I chose `hot_take` (after first labelling it `reaction`), because:* it reads
+> like an angry response to the news, which is why I first put it in `reaction`.
+> But it confidently predicts the league collapsing, with no checkable support
+> ("spun off the first division before" isn't a specific fact). My rule says a
+> judgement or prediction is `hot_take` even when it's emotional. This was the
+> pattern behind most of the 38 relabels: I had been reading angry opinions,
+> especially about the City story, as reactions.
 
 ---
 
