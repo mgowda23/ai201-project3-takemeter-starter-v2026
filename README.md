@@ -243,16 +243,32 @@ split), and my criteria set a looser target for it because of that.
 
 <!-- Your starting model, your settings, and anything you changed and why. -->
 
-**Base model:**
+**Base model:** `distilbert-base-uncased`, fine-tuned for 3-way classification.
 
 **Settings:** <!-- epochs, learning rate, batch size, seed -->
+3 epochs, learning rate 2e-5, batch size 16, max length 128 tokens, seed 42.
 
-**Anything I changed from the defaults, and why:**
+**Anything I changed from the defaults, and why:** Nothing. I kept every default
+so this run is a clean baseline for next unit's comparison.
+
+**Device:** `mps` (Apple Silicon GPU), torch 2.14.1, as recorded in
+`results.json`. Results from a different device can differ slightly even with
+the same data and seed.
 
 **Split sizes:** <!-- train / val / test, and per-label counts in the test
 split. If a label had fewer than about 8 in test, say so — it explains a lot
 of next unit's variance. -->
+Stratified 70/15/15 from 161 rows: **112 train / 24 validation / 25 test**.
 
+| Label | Train | Val | Test |
+|---|---|---|---|
+| `hot_take` | 53 | 12 | 12 |
+| `reaction` | 38 | 8 | 8 |
+| `analysis` | 21 | 4 | **5** |
+
+`analysis` has only **5 posts in the test split**, under the roughly 8 needed for a
+stable measure, so one post more or less right moves its F1 a lot between
+seeds. That's why criterion 3 sets a looser target for it.
 
 
 ---
@@ -266,19 +282,54 @@ of next unit's variance. -->
      workflow and disclosing it costs you nothing. Not disclosing it is the
      problem. -->
 
-**Moment 1**
+I used Claude (an AI assistant in VS Code) throughout this unit as a guide.
+The two moments that changed my work most:
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+**Moment 1: tightening my label rules before labelling**
 
-**Moment 2**
+- *What I asked for:* Before labelling, I asked whether my README taxonomy was
+  ready.
+- *What came back:* Two gaps, found by checking the comments I'd collected.
+  My definitions only covered "players, teams, managers or transfers", but many
+  of my comments were about referees, the league and City's punishment. And
+  four kinds of comment had no rule at all: questions, bare facts with no
+  opinion, predictions, and off-topic comments.
+- *What I changed:* I broadened `analysis` and `hot_take` to cover anyone or
+  anything in football, and added rules for the four uncovered cases (loaded
+  question = `hot_take`, genuine question = `reaction`, bare fact = `analysis`,
+  unsupported prediction = `hot_take`). I also accepted a trade-off it pointed
+  out: `reaction` is now the catch-all for anything not argued or judged.
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+**Moment 2: a second-opinion check on my labels**
 
-**Pre-labelling disclosure:**
+- *What I asked for:* After labelling everything by hand, I asked it to read my
+  141 non-cold labels against my own written rules and list where it disagreed.
+- *What came back:* 38 disagreements in four patterns. The biggest (about 19
+  rows) was judgements I'd labelled `reaction` that my rule calls `hot_take`,
+  almost the whole City-scandal group. Others were `analysis` labels with no
+  checkable fact in them, a few real facts I'd missed (one was the exact
+  example from my own bare-facts rule), and pure feelings I'd called
+  `hot_take`.
+- *What I changed:* I accepted all 38, and each is marked in the note column.
+  The bigger lesson was that I'd been reading angry opinions as reactions. My
+  20 cold rows were left as they were, so next unit I can see whether the same
+  habit shows up there.
+
+**Other help, for completeness:** it suggested where to find comments (thread
+types and search links), checked my collection for duplicates and
+context-dependent comments, converted my pasted comments into `labels.csv`,
+picked the 20 cold rows at random, explained options for my five criteria (I
+chose the numbers), and drafted the wording of my README and criteria reasons,
+which I reviewed and edited.
+
+**Pre-labelling disclosure:** **No AI pre-labelling.** I labelled all 161 rows
+myself. Two things to disclose:
+1. **38 rows were changed after the AI second-opinion review** (Moment 2). Each
+   is marked `relabelled after AI second-opinion review` in the note column.
+2. **One row was dropped from the cold set.** While explaining the CSV format,
+   the AI used a cold row ("This Brighton team is insane…") as its example and
+   showed a label for it. I swapped that row out of the cold set (its note says
+   why) and a random hand-labelled row replaced it.
 
 <!-- ═══════════════════════ UNIT 6 — THE TEST ═══════════════════════
 
