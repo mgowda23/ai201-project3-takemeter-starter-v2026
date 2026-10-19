@@ -51,63 +51,58 @@ whether you hit them:
 
 ---
 
-## 1.
+## 1. Overall accuracy is at least 0.64 on the held-out test set, on all three seeds.
 
-<!-- Your criterion. It must name a number. -->
-
-
-
-**Why this target:**
-
-
-
----
-
-## 2.
-
-<!-- Your criterion. -->
-
-
-
-**Why this target:**
-
-
+**Why this target:** `hot_take` is 77 of my 161 posts (48%), so a model that
+always guessed `hot_take` would already score about 0.48. Random guessing across
+three labels gets about 0.33. With roughly 25 posts in the test split, 0.64
+means at least 16 of 25 right, which is four posts clear of the always-`hot_take`
+guesser. I'd only call it useful if it beats that guesser by a real margin.
+I didn't go higher because it only has about 112 training posts and the target
+has to hold on all three seeds.
 
 ---
 
-## 3.
+## 2. No more than 60% of the model's test-set predictions are `hot_take`, on all three seeds.
 
-<!-- Your criterion. -->
-
-
-
-**Why this target:**
-
-
-
----
-
-## 4.
-
-<!-- Your criterion. -->
-
-
-
-**Why this target:**
-
-
+**Why this target:** `hot_take` is my biggest label, so the cheapest way for the
+model to look decent is to lean on it. About 48% of my test posts really are
+`hot_take`, so predicting it for up to 60% leaves some room for honest
+mistakes. Anything above that means it's guessing the majority label instead
+of telling the labels apart. I'll check it from the column totals of the
+confusion matrix in `results.json`.
 
 ---
 
-## 5.
+## 3. `hot_take` and `reaction` each have an F1 of at least 0.55, and `analysis` has an F1 of at least 0.40, on all three seeds.
 
-<!-- Your criterion. -->
+**Why this target:** `analysis` is my smallest label, with only 30 posts (19%), so
+only about 5 land in the test split, and each one moves its F1 a lot between
+seeds. That's why its bar is lower. `hot_take` (about 12 test posts) and
+`reaction` (about 8) have enough examples to hold a higher bar. Even 0.40 for
+`analysis` means it has to find some of those posts rather than ignore the label.
 
+---
 
+## 4. When I label the 30 staff posts under the staff taxonomy, I agree with the staff labels on at least 22 of 30 (73%).
 
-**Why this target:**
+**Why this target:** When I had an AI second-opinion check of my own 141
+non-cold labels against my written rules, we disagreed on 38 of them, which is
+about 73% agreement. Most of those were judgements I had labelled `reaction` that
+my own rule calls `hot_take`. Applying someone else's written rules should be
+at least as reliable as that. If I can't reach 22/30, that's evidence that my
+labelling, not the model, is a source of error.
 
+---
 
+## 5. On the test set, the model's most-confident third of predictions is at least 0.20 more accurate than its least-confident third, on all three seeds.
+
+**Why this target:** Each third is only about 8 posts, so one post is about 12.5
+points. A gap of 0.20 means the confident guesses get at least two more
+right than the unsure ones, which is more than one lucky post. If the gap is
+smaller, the model's confidence tells you nothing, and you couldn't use it to
+decide which predictions to trust. The notebook reports both numbers as
+`accuracy_most_confident_third` and `accuracy_least_confident_third`.
 
 ---
 
